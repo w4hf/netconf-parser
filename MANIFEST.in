@@ -1,0 +1,12 @@
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+recursive-include netconf_parser *.py
+recursive-include tests *.py
+exclude example.py
+exclude test_*.py
+exclude *.md
+exclude .gitignore
+exclude docs/
+exclude docs

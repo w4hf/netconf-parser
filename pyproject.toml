@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netconf-parser"
+version = "1.0.0"
+description = "A Python library for parsing and comparing hierarchical network device configurations"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "Hamza Bouabdallah", email = "w4hf@pm.me"}
+]
+maintainers = [
+    {name = "Hamza Bouabdallah", email = "w4hf@pm.me"}
+]
+keywords = ["network", "configuration", "parser", "netconf", "cisco", "juniper", "diff", "compare"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Telecommunications Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/w4hf/netconf-parser"
+Documentation = "https://github.com/w4hf/netconf-parser#readme"
+Repository = "https://github.com/w4hf/netconf-parser"
+Issues = "https://github.com/w4hf/netconf-parser/issues"
+Changelog = "https://github.com/w4hf/netconf-parser/releases"
+
+[tool.setuptools]
+packages = ["netconf_parser"]
+
+[tool.setuptools.package-data]
+netconf_parser = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+
