@@ -139,7 +139,7 @@ interface GigabitEthernet0/1
         
         # Ignore comment lines (starting with !)
         deleted, added, modified_root, modified_children = compare_confs(
-            ref_conf, cmp_conf, ignore_regex=r"^!"
+            ref_conf, cmp_conf, ignore_regex=[r"^!"]
         )
         
         # Comments should be ignored, but we should still see hostname change
