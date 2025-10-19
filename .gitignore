@@ -1,4 +1,6 @@
 docs/
+samples/
+test_env/
 
 # Python
 __pycache__/
