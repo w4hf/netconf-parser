@@ -6,25 +6,30 @@ import re
 from .models import Conf, ConfLine
 
 
-def _line_matches_regex(line: ConfLine, regex_pattern: str) -> bool:
+def _line_matches_regex(line: ConfLine, regex_patterns: list[str]) -> bool:
     """
-    Check if a line matches the ignore regex pattern.
+    Check if a line starts with any of the ignore regex patterns.
     
     Args:
         line: The ConfLine to check
-        regex_pattern: The regex pattern to match against
+        regex_patterns: List of regex patterns to match against
         
     Returns:
-        True if the line matches the pattern (should be ignored)
+        True if the line starts with any pattern (should be ignored)
     """
-    if not regex_pattern:
+    if not regex_patterns:
         return False
     
     line_text = " ".join(line.content)
-    try:
-        return bool(re.search(regex_pattern, line_text))
-    except re.error:
-        return False
+    for pattern in regex_patterns:
+        try:
+            # Use re.match to check if line starts with the pattern
+            if re.match(pattern, line_text):
+                return True
+        except re.error:
+            continue
+    
+    return False
 
 
 def _get_line_signature(line: ConfLine) -> str:
@@ -185,7 +190,7 @@ def _compare_children_of_parent(
 def compare_confs(
     reference_conf: Conf,
     compared_conf: Conf,
-    ignore_regex: str = ""
+    ignore_regex: list[str] = None
 ) -> tuple[list[ConfLine], list[ConfLine], list[dict[str, ConfLine]], list[dict]]:
     """
     Compare two configurations and identify differences.
@@ -193,7 +198,8 @@ def compare_confs(
     Args:
         reference_conf: The reference (baseline) configuration
         compared_conf: The configuration to compare against the reference
-        ignore_regex: Regular expression pattern for lines to ignore in comparison
+        ignore_regex: List of regex patterns for lines to ignore in comparison. 
+                     Lines starting with any of these patterns will be excluded.
         
     Returns:
         A tuple containing:
