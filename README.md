@@ -134,7 +134,7 @@ new_conf = Conf.from_file("current.txt")
 deleted, added, modified_root, modified_children = compare_confs(
     ref_conf, 
     new_conf,
-    ignore_regex=r"^!"  # Ignore comment lines
+    ignore_regex=[r"^!", r"^#"]  # Ignore lines starting with ! or #
 )
 
 # Check deleted lines
@@ -226,14 +226,14 @@ Compare two configurations and identify differences.
 compare_confs(
     reference_conf: Conf,
     compared_conf: Conf,
-    ignore_regex: str = ""
+    ignore_regex: list[str] = None
 ) -> tuple[list[ConfLine], list[ConfLine], list[ConfLine], list[list[ConfLine]]]
 ```
 
 **Parameters:**
 - `reference_conf`: The baseline configuration
 - `compared_conf`: The configuration to compare
-- `ignore_regex`: Regular expression for lines to ignore
+- `ignore_regex`: List of regex patterns for lines to ignore. Lines starting with any of these patterns will be excluded from comparison
 
 **Returns:** A tuple containing:
 1. `deleted_lines`: Lines in reference but not in compared
